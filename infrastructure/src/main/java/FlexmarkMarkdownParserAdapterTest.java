@@ -37,6 +37,18 @@ class FlexmarkMarkdownParserAdapterTest {
                 "<p><em>test</em></p>\n");
     }
 
+    @Test
+    void list_markdown_content_should_render_as_html_list() {
+
+        assertMarkdownIsParsedAs(
+                "- item 1\n" +
+                        "- item 2",
+                "<ul>\n" +
+                        "<li>item 1</li>\n" +
+                        "<li>item 2</li>\n" +
+                        "</ul>\n");
+    }
+
     private MarkdownParserPort parserUnderTest() {
         return new FlexmarkMarkdownParserAdapter();
     }
