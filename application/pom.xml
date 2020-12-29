@@ -26,8 +26,8 @@
 
     <dependencies>
         <dependency>
-            <artifactId>domain</artifactId>
-            <groupId>fr.baldir.kata</groupId>
+            <artifactId>domain-hexagon</artifactId>
+            <groupId>fr.baldir.joplin</groupId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
