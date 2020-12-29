@@ -49,6 +49,23 @@ class FlexmarkMarkdownParserAdapterTest {
                         "</ul>\n");
     }
 
+    @Test
+    void joplin_attachment_image_markdown_content_should_render_as_html_image() {
+
+        assertMarkdownIsParsedAs(
+                "![Screenshot_20200824-183242.png](:/f805dbfc145d4544bec760448298f08b)",
+                "<p><img src=\":/f805dbfc145d4544bec760448298f08b\" alt=\"Screenshot_20200824-183242.png\" /></p>\n");
+    }
+
+    @Test
+    void joplin_hyperlink_to_note_markdown_content_should_render_as_html_anchor() {
+
+        assertMarkdownIsParsedAs(
+                "[discuter des demandes ambiguës](:/60fe5fd3db394b09bf2de007de01aa0d)",
+                "<p><a href=\":/60fe5fd3db394b09bf2de007de01aa0d\">discuter des demandes ambiguës</a></p>\n");
+    }
+
+    //![Screenshot_20200824-183242.png](:/f805dbfc145d4544bec760448298f08b)
     private MarkdownParserPort parserUnderTest() {
         return new FlexmarkMarkdownParserAdapter();
     }
