@@ -4,32 +4,47 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class FlexmarkMarkdownParserAdapterTest {
+
     @Test
     void empty_markdown_content_should_render_as_empty_string() {
-        MarkdownParserPort parser =  new FlexmarkMarkdownParserAdapter();
-        var renderedHtml = parser.parse("");
-        assertThat(renderedHtml).isEqualTo("");
+        assertMarkdownIsParsedAs(
+                "",
+                "");
     }
+
 
     @Test
     void regular_markdown_content_should_render_as_paragraph() {
-        MarkdownParserPort parser =  new FlexmarkMarkdownParserAdapter();
-        var renderedHtml = parser.parse("test");
-        assertThat(renderedHtml).isEqualToNormalizingNewlines("<p>test</p>\n");
+
+        assertMarkdownIsParsedAs(
+                "test",
+                "<p>test</p>\n");
     }
 
     @Test
     void bold_markdown_content_should_render_as_paragraph_with_bold_tag() {
-        MarkdownParserPort parser =  new FlexmarkMarkdownParserAdapter();
-        var renderedHtml = parser.parse("**test**");
-        assertThat(renderedHtml).isEqualToNormalizingNewlines("<p><strong>test</strong></p>\n");
+
+        assertMarkdownIsParsedAs(
+                "**test**",
+                "<p><strong>test</strong></p>\n");
     }
 
     @Test
     void emphase_markdown_content_should_render_as_paragraph_with_emphase_tag() {
-        MarkdownParserPort parser =  new FlexmarkMarkdownParserAdapter();
-        var renderedHtml = parser.parse("*test*");
-        assertThat(renderedHtml).isEqualToNormalizingNewlines("<p><em>test</em></p>\n");
+
+        assertMarkdownIsParsedAs(
+                "*test*",
+                "<p><em>test</em></p>\n");
     }
 
+    private MarkdownParserPort parserUnderTest() {
+        return new FlexmarkMarkdownParserAdapter();
+    }
+
+
+    private void assertMarkdownIsParsedAs(String markdownInput, String expectedHtmlOutput) {
+        MarkdownParserPort parser = parserUnderTest();
+        var renderedHtml = parser.parse(markdownInput);
+        assertThat(renderedHtml).isEqualToNormalizingNewlines(expectedHtmlOutput);
+    }
 }
