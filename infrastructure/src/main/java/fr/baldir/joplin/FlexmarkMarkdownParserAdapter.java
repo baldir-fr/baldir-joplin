@@ -5,6 +5,9 @@ import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import fr.baldir.joplin.ports.in.MarkdownParserPort;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Set;
 
 public class FlexmarkMarkdownParserAdapter implements MarkdownParserPort {
     @Override
@@ -18,7 +21,8 @@ public class FlexmarkMarkdownParserAdapter implements MarkdownParserPort {
 
     @Override
     public FrontmatterMetadata parseFrontmatter(String markdownContent) {
-       var frontmatterExtension = YamlFrontMatterExtension.create();
+        var frontmatterExtension = YamlFrontMatterExtension.create();
+
         final var builder = Parser.builder();
         frontmatterExtension.extend(builder);
 
@@ -26,17 +30,24 @@ public class FlexmarkMarkdownParserAdapter implements MarkdownParserPort {
         var document = parser.parse(markdownContent);
 
         final var frontmatterMetadataBuilder = FrontmatterMetadata.builder();
-        var visitor = new AbstractYamlFrontMatterVisitor(){
+        var visitor = new AbstractYamlFrontMatterVisitor() {
 
         };
         visitor.visit(document);
         var visitedData = visitor.getData();
-        if(visitedData.containsKey("title")){
-            frontmatterMetadataBuilder.title(visitedData.get("title").get(0));
+        if (visitedData.containsKey("title")) {
+            final var title = visitedData.get("title").get(0);
+            frontmatterMetadataBuilder.title(title);
         }
-        if(visitedData.containsKey("date")){
-            frontmatterMetadataBuilder.date(visitedData.get("date").get(0));
+        if (visitedData.containsKey("date")) {
+            final var date = visitedData.get("date").get(0);
+            frontmatterMetadataBuilder.date(date);
         }
-        return  frontmatterMetadataBuilder.build();
+        if (visitedData.containsKey("tags")) {
+            final var tag = visitedData.get("tags").get(0);
+            var strippedTag = StringUtils.unwrap(tag, "\"");
+            frontmatterMetadataBuilder.tags(Set.of(new FrontmatterTag(strippedTag)));
+        }
+        return frontmatterMetadataBuilder.build();
     }
 }

@@ -1,7 +1,10 @@
 import fr.baldir.joplin.FlexmarkMarkdownParserAdapter;
 import fr.baldir.joplin.FrontmatterMetadata;
+import fr.baldir.joplin.FrontmatterTag;
 import fr.baldir.joplin.ports.in.MarkdownParserPort;
 import org.junit.jupiter.api.Test;
+
+import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -32,6 +35,20 @@ class FlexmarkMarkdownFrontmatterParserAdapterTest {
                         "---",
                 FrontmatterMetadata.builder()
                         .date("2018-12-25")
+                        .build());
+    }
+
+    @Test
+    void frontmatter_with_tag() {
+        // "date: \"2018-12-25\"\n" +
+        //                        "tags: [\"tag A\", \"tag B\", \"tag C\"]\n" +
+        //                        "excerpt: \"description\"\n" +
+        assertYamlFrontmatterIsParsedAs(
+                "---\n" +
+                        "tags: [\"tag A\"]\n" +
+                        "---",
+                FrontmatterMetadata.builder()
+                        .tags(Set.of(new FrontmatterTag("tag A")))
                         .build());
     }
 
