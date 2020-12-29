@@ -9,7 +9,7 @@ class FlexmarkMarkdownFrontmatterParserAdapterTest {
 
     @Test
     void frontmatter_with_title() {
-      // "date: \"2018-12-25\"\n" +
+        // "date: \"2018-12-25\"\n" +
         //                        "tags: [\"tag A\", \"tag B\", \"tag C\"]\n" +
         //                        "excerpt: \"description\"\n" +
         assertYamlFrontmatterIsParsedAs(
@@ -18,6 +18,20 @@ class FlexmarkMarkdownFrontmatterParserAdapterTest {
                         "---",
                 FrontmatterMetadata.builder()
                         .title("This is a title")
+                        .build());
+    }
+
+    @Test
+    void frontmatter_with_date() {
+        // "date: \"2018-12-25\"\n" +
+        //                        "tags: [\"tag A\", \"tag B\", \"tag C\"]\n" +
+        //                        "excerpt: \"description\"\n" +
+        assertYamlFrontmatterIsParsedAs(
+                "---\n" +
+                        "date: 2018-12-25\n" +
+                        "---",
+                FrontmatterMetadata.builder()
+                        .date("2018-12-25")
                         .build());
     }
 

@@ -34,6 +34,9 @@ public class FlexmarkMarkdownParserAdapter implements MarkdownParserPort {
         if(visitedData.containsKey("title")){
             frontmatterMetadataBuilder.title(visitedData.get("title").get(0));
         }
+        if(visitedData.containsKey("date")){
+            frontmatterMetadataBuilder.date(visitedData.get("date").get(0));
+        }
         return  frontmatterMetadataBuilder.build();
     }
 }
