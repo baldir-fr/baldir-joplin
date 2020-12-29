@@ -1,3 +1,4 @@
+import fr.baldir.joplin.FlexmarkMarkdownParserAdapter;
 import fr.baldir.joplin.ports.in.MarkdownParserPort;
 import org.junit.jupiter.api.Test;
 
