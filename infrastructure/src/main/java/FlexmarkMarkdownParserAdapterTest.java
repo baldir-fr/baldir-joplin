@@ -25,4 +25,11 @@ class FlexmarkMarkdownParserAdapterTest {
         assertThat(renderedHtml).isEqualToNormalizingNewlines("<p><strong>test</strong></p>\n");
     }
 
+    @Test
+    void emphase_markdown_content_should_render_as_paragraph_with_emphase_tag() {
+        MarkdownParserPort parser =  new FlexmarkMarkdownParserAdapter();
+        var renderedHtml = parser.parse("*test*");
+        assertThat(renderedHtml).isEqualToNormalizingNewlines("<p><em>test</em></p>\n");
+    }
+
 }
