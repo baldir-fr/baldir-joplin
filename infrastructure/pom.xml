@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <artifactId>application</artifactId>
-            <groupId>fr.baldir.kata</groupId>
+            <groupId>fr.baldir.joplin</groupId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

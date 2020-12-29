@@ -52,6 +52,21 @@ class FlexmarkMarkdownFrontmatterParserAdapterTest {
                         .build());
     }
 
+    @Test
+    void frontmatter_with_tags() {
+        // "date: \"2018-12-25\"\n" +
+        //                        "tags: [\"tag A\", \"tag B\", \"tag C\"]\n" +
+        //                        "excerpt: \"description\"\n" +
+        assertYamlFrontmatterIsParsedAs(
+                "---\n" +
+                        "tags: [\"tag A\", \"tag B\"]\n" +
+                        "---",
+                FrontmatterMetadata.builder()
+                        .tags(Set.of(new FrontmatterTag("tag A"),
+                                new FrontmatterTag("tag B")))
+                        .build());
+    }
+
     private MarkdownParserPort parserUnderTest() {
         return new FlexmarkMarkdownParserAdapter();
     }
